@@ -1,0 +1,17 @@
+{
+  "name": "f8-module-b-finaltest-vinh",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "json-server --watch db.json --port 3000 -m ./node_modules/json-server-auth"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0",
+    "navigo": "^8.11.1"
+  }
+}
