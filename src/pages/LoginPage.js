@@ -1,44 +1,9 @@
 import { router } from "../main";
-import { post } from "../api/auth";
 
 function LoginPage() {
-  if (localStorage.getItem("loginData")) {
-    router.navigate("/");
-  }
-
-  const loginForm = document.getElementById("login-form");
-
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(loginForm);
-    const userInfo = Object.fromEntries(formData);
-    console.log(userInfo);
-
-    userInfo.email = userInfo.email.trim();
-
-    if (userInfo.email === "") {
-      alert("Email is required.");
-      return;
-    }
-
-    if (userInfo.password.length < 6) {
-      alert("Password must be at least 6 characters.");
-      return;
-    }
-
-    const data = await post(userInfo, "login");
-
-    if (data.accessToken) {
-      alert("Login successful!");
-      console.log(data);
-      localStorage.setItem("loginData", JSON.stringify(data));
-      router.navigate("/");
-    } else {
-      alert(data.error || "Unexpected error occurred.");
-      loginForm.reset();
-    }
-  });
+  // if (localStorage.getItem("loginData")) {
+  //   router.navigate("/");
+  // }
 
   return `
     <form action="" id="login-form">
