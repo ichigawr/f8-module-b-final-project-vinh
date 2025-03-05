@@ -1,6 +1,6 @@
 import { post } from "../api/api";
 
-const afterLogin = () => {
+const loginPageHandler = () => {
   const loginForm = document.getElementById("login-form");
 
   loginForm.addEventListener("submit", async (e) => {
@@ -36,7 +36,7 @@ const afterLogin = () => {
   });
 };
 
-const afterRegister = () => {
+const registerPageHandler = () => {
   const registerForm = document.getElementById("register-form");
 
   registerForm.addEventListener("submit", async (e) => {
@@ -69,4 +69,4 @@ const afterRegister = () => {
   });
 };
 
-export { afterLogin, afterRegister };
+export { loginPageHandler, registerPageHandler };
