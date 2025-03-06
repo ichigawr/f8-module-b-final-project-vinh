@@ -1,32 +1,42 @@
 import quantityInputHandler from "./quantityInputHandler";
 
-const productPageHandler = ({ id, stock, images }) => {
+const productPageHandler = ({ id, title, price, stock, images, thumbnail }) => {
   if (!images) return;
 
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
   const img = document.querySelector(".product__left-content img");
-  const addCartBtn = document.getElementById("add-cart-btn");
+  const addToCartBtn = document.getElementById("add-to-cart-btn");
   const cartCount = document.getElementById("cart-count");
   let index = 0;
 
-  prevBtn.addEventListener("click", () => {
-    index = (index - 1 + images.length) % images.length;
-    img.src = images[index];
-  });
+  if (images.length > 1) {
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
 
-  nextBtn.addEventListener("click", () => {
-    index = (index + 1) % images.length;
-    img.src = images[index];
-  });
+    prevBtn.addEventListener("click", () => {
+      index = (index - 1 + images.length) % images.length;
+      img.src = images[index];
+    });
 
-  quantityInputHandler(stock);
+    nextBtn.addEventListener("click", () => {
+      index = (index + 1) % images.length;
+      img.src = images[index];
+    });
+  }
 
-  addCartBtn.addEventListener("click", () => {
+  quantityInputHandler();
+
+  addToCartBtn.addEventListener("click", () => {
     try {
       const cart = JSON.parse(localStorage.cart);
       const inputQuantity = document.querySelector(".input-quantity input");
-      const product = { id, quantity: parseInt(inputQuantity.value) };
+      const product = {
+        id,
+        title,
+        price,
+        stock,
+        thumbnail,
+        quantity: parseInt(inputQuantity.value),
+      };
       const index = cart.findIndex((item) => item.id === product.id);
 
       if (index === -1) {

@@ -12,16 +12,18 @@ import {
   registerPageHandler,
 } from "./handlers/authPageHandler";
 import productPageHandler from "./handlers/productPageHandler";
+import cartPageHandler from "./handlers/cartPageHandler";
+import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 import { get } from "./api/api";
 
 localStorage.cart ??= JSON.stringify([]);
 
 const app = document.getElementById("app");
-export const router = new Navigo("/", { linksSelector: "a" });
+const router = new Navigo("/", { linksSelector: "a" });
 
 document.getElementById("header").innerHTML = Header();
 
-const render = async (content, handler = null, ...params) => {
+const render = (content, handler = null, ...params) => {
   app.innerHTML = content(...params);
   handler && handler(...params);
 };
@@ -35,8 +37,20 @@ router
       const product = await get(`products/${data.id}`);
       render(ProductPage, productPageHandler, product);
     },
-    "/cart": () => render(CartPage),
+    "/cart": () => {
+      try {
+        const cart = JSON.parse(localStorage.cart);
+        render(CartPage, cartPageHandler, cart);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    "/checkout-success": () => render(CheckoutSuccessPage, () => {
+      setTimeout(() => router.navigate("/"), 10000);
+    }),
   })
-  .notFound(() => render(NotFoundPage()));
+  .notFound(() => render(NotFoundPage));
 
 router.resolve();
+
+export { render, router };

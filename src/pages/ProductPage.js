@@ -3,6 +3,7 @@ import QuantityInput from "../components/QuantityInput";
 
 function ProductPage(product) {
   const {
+    id,
     title,
     description,
     price,
@@ -13,6 +14,7 @@ function ProductPage(product) {
   } = product;
 
   if (
+    !id ||
     !title ||
     !description ||
     !price ||
@@ -32,13 +34,14 @@ function ProductPage(product) {
       <div class="product__left-content">
         <img src="${images[0]}" alt="${title}" />
         ${
-          images.length > 1 &&
-          `<button id="prev-btn">
-            <i class="fa-solid fa-angle-left"></i>
-          </button>
-          <button id="next-btn">
-            <i class="fa-solid fa-angle-right"></i>
-          </button>`
+          images.length > 1
+            ? `<button id="prev-btn">
+                <i class="fa-solid fa-angle-left"></i>
+              </button>
+              <button id="next-btn">
+                <i class="fa-solid fa-angle-right"></i>
+              </button>`
+            : ""
         }
       </div>
 
@@ -53,11 +56,12 @@ function ProductPage(product) {
 
         <div id="product__price">
           ${
-            discountPercentage > 0 &&
-            `<p class="old-price">
-              <del>$${price}</del>
-              <span>-${discountPercentage}%</span>
-            </p>`
+            discountPercentage > 0
+              ? `<p class="old-price">
+                  <del>$${price}</del>
+                  <span>-${discountPercentage}%</span>
+                </p>`
+              : ""
           }
           <p class="new-price">$${newPrice.toFixed(2)}</p>
           <small>${description}</small>
@@ -70,11 +74,11 @@ function ProductPage(product) {
               inStock ? (stock >= 20 ? "#00d98b" : "orange") : "red"
             }"
           ></i>
-          ${inStock && QuantityInput()}
+          ${inStock ? QuantityInput(id, stock) : ""}
           <span>${inStock ? `${stock} in stock` : "Out of stock"}.</span>
         </div>
 
-        <button id="add-cart-btn">Add to cart</button>
+        <button id="add-to-cart-btn">Add to cart</button>
       </div>
     </div>
   `;
