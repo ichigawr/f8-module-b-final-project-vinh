@@ -13,25 +13,26 @@ import {
 import productPageHandler from "./handlers/productPageHandler";
 import { get } from "./api/api";
 
+localStorage.cart ??= JSON.stringify([]);
+
 const app = document.getElementById("app");
 export const router = new Navigo("/", { linksSelector: "a" });
 
 document.getElementById("header").innerHTML = Header();
 
-const render = async (content, beforeHandler = null, afterHandler = null, ...params) => {
-  beforeHandler && beforeHandler(...params);
+const render = async (content, handler = null, ...params) => {
   app.innerHTML = content(...params);
-  afterHandler && afterHandler(...params);
+  handler && handler(...params);
 };
 
 router
   .on({
     "/": () => render(HomePage),
-    "/login": () => render(LoginPage, null, loginPageHandler),
-    "/register": () => render(RegisterPage, null, registerPageHandler),
+    "/login": () => render(LoginPage, loginPageHandler),
+    "/register": () => render(RegisterPage, registerPageHandler),
     "products/:id": async ({ data }) => {
       const product = await get(`products/${data.id}`);
-      render(ProductPage, null, productPageHandler, product);
+      render(ProductPage, productPageHandler, product);
     },
   })
   .notFound(() => render(NotFoundPage()));
