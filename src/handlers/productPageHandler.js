@@ -1,29 +1,14 @@
+import sliderHandler from "./sliderHandler";
 import quantityInputHandler from "./quantityInputHandler";
 
 const productPageHandler = ({ id, title, price, stock, images, thumbnail }) => {
-  if (!images) return;
+  if (!id || !title || !price || !stock || !thumbnail) return;
 
-  const img = document.querySelector(".product__left-content img");
+  sliderHandler(images);
+  quantityInputHandler();
+
   const addToCartBtn = document.getElementById("add-to-cart-btn");
   const cartCount = document.getElementById("cart-count");
-  let index = 0;
-
-  if (images.length > 1) {
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
-
-    prevBtn.addEventListener("click", () => {
-      index = (index - 1 + images.length) % images.length;
-      img.src = images[index];
-    });
-
-    nextBtn.addEventListener("click", () => {
-      index = (index + 1) % images.length;
-      img.src = images[index];
-    });
-  }
-
-  quantityInputHandler();
 
   addToCartBtn.addEventListener("click", () => {
     try {

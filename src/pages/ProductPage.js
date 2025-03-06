@@ -1,4 +1,5 @@
 import "./ProductPage.css";
+import Slider from "../components/Slider";
 import QuantityInput from "../components/QuantityInput";
 
 function ProductPage(product) {
@@ -32,17 +33,7 @@ function ProductPage(product) {
   return `
     <div id="product">
       <div class="product__left-content">
-        <img src="${images[0]}" alt="${title}" />
-        ${
-          images.length > 1
-            ? `<button id="prev-btn">
-                <i class="fa-solid fa-angle-left"></i>
-              </button>
-              <button id="next-btn">
-                <i class="fa-solid fa-angle-right"></i>
-              </button>`
-            : ""
-        }
+        ${Slider(images, title)}
       </div>
 
       <div class="product__right-content">
