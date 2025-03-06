@@ -1,16 +1,15 @@
+import './header.css';
+
 function Header() {
   return `
-    <header>
-      <a href="/" class="logo"></a>
-      <nav>
-        <ul>
-          <li><a href="/"></a></li>
-          <li><a href="/"></a></li>
-          <li><a href="/"></a></li>
-        </ul>
-      </nav>
-    </header>
-  `
+    <a href="/" class="logo">Logo</a>
+    <nav>
+      <ul>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      </ul>
+    </nav>
+  `;
 }
 
 export default Header;
