@@ -1,4 +1,4 @@
-import { url } from ".";
+const url = "http://localhost:3000";
 
 const get = async (path) => {
   try {
