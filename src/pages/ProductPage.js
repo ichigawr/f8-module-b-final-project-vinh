@@ -1,4 +1,5 @@
 import "./ProductPage.css";
+import QuantityInput from "../components/QuantityInput";
 
 function ProductPage(product) {
   const {
@@ -69,18 +70,7 @@ function ProductPage(product) {
               inStock ? (stock >= 20 ? "#00d98b" : "orange") : "red"
             }"
           ></i>
-          ${
-            inStock &&
-            `<div id="input-quantity">
-              <button id="decrease-btn">
-                <i class="fa-solid fa-minus"></i>
-              </button>
-              <input type="text" value="1" />
-              <button id="increase-btn">
-                <i class="fa-solid fa-plus"></i>
-              </button>
-            </div>`
-          }
+          ${inStock && QuantityInput()}
           <span>${inStock ? `${stock} in stock` : "Out of stock"}.</span>
         </div>
 

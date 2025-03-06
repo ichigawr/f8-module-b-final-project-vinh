@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {
   loginPageHandler,
@@ -34,6 +35,7 @@ router
       const product = await get(`products/${data.id}`);
       render(ProductPage, productPageHandler, product);
     },
+    "/cart": () => render(CartPage),
   })
   .notFound(() => render(NotFoundPage()));
 

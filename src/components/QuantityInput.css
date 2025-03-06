@@ -1,0 +1,31 @@
+.input-quantity {
+    display: flex;
+    align-items: center;
+
+    input,
+    button {
+        height: 30px;
+        border: 1px solid #a3a3a3;
+    }
+
+    input,
+    button i {
+        color: #737373;
+    }
+
+    input {
+        width: 70px;
+        border-width: 1px 0;
+        outline: none;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    button {
+        width: 30px;
+
+        &:hover {
+            background-color: #e3e3e3;
+        }
+    }
+}
