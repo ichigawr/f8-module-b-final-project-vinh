@@ -29,4 +29,19 @@ const post = async (body, path) => {
   }
 };
 
-export { get, post };
+const patch = async (body, path) => {
+  try {
+    const res = await fetch(`${url}/${path}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    return res.ok;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { get, post, patch };

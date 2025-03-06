@@ -1,6 +1,7 @@
-import { render, router } from "../main";
 import CartPage from "../pages/CartPage";
 import quantityInputHandler from "./quantityInputHandler";
+import { render, router } from "../main";
+import { patch } from "../api/api";
 
 const cartPageHandler = (cart) => {
   if (!Array.isArray(cart)) {
@@ -26,6 +27,11 @@ const cartPageHandler = (cart) => {
   });
 
   checkoutBtn.addEventListener("click", () => {
+    const products = cart.map(({ id, quantity, stock }) => {
+      const newStock = { stock: stock - quantity };
+      patch(newStock, `products/${id}`);
+    });
+
     localStorage.cart = JSON.stringify([]);
     cartCount.textContent = 0;
     router.navigate("/checkout-success");
