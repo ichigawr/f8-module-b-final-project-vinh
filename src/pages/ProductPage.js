@@ -32,11 +32,11 @@ function ProductPage(product) {
 
   return `
     <div id="product">
-      <div class="product__left-content">
+      <div id="product__left-content">
         ${Slider(images, title)}
       </div>
 
-      <div class="product__right-content">
+      <div id="product__right-content">
         <div id="product__title">
           <p>
             <i class="fa-solid fa-star" style="color: #fbb346"></i>

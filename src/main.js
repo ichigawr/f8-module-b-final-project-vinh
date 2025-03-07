@@ -11,6 +11,10 @@ import {
   loginPageHandler,
   registerPageHandler,
 } from "./handlers/authPageHandler";
+import homePageHandler, {
+  getFeaturedProducts,
+  getCategorizedProducts,
+} from "./handlers/homePageHandler";
 import productPageHandler from "./handlers/productPageHandler";
 import cartPageHandler from "./handlers/cartPageHandler";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
@@ -23,17 +27,22 @@ const router = new Navigo("/", { linksSelector: "a" });
 
 document.getElementById("header").innerHTML = Header();
 
-const render = (content, handler = null, ...params) => {
-  app.innerHTML = content(...params);
-  handler && handler(...params);
+const render = (content, handler = null, ...args) => {
+  app.innerHTML = content(...args);
+  handler && handler(...args);
 };
 
 router
   .on({
-    "/": () => render(HomePage),
+    "/": async () => {
+      const products = await get("products");
+      const categorizedProducts = getCategorizedProducts(products);
+      const featuredProducts = getFeaturedProducts(products);
+      render(HomePage, homePageHandler, products, categorizedProducts, featuredProducts);
+    },
     "/login": () => render(LoginPage, loginPageHandler),
     "/register": () => render(RegisterPage, registerPageHandler),
-    "products/:id": async ({ data }) => {
+    "/products/:id": async ({ data }) => {
       const product = await get(`products/${data.id}`);
       render(ProductPage, productPageHandler, product);
     },
@@ -45,9 +54,10 @@ router
         console.error(error);
       }
     },
-    "/checkout-success": () => render(CheckoutSuccessPage, () => {
-      setTimeout(() => router.navigate("/"), 10000);
-    }),
+    "/checkout-success": () =>
+      render(CheckoutSuccessPage, () => {
+        setTimeout(() => router.navigate("/"), 10000);
+      }),
   })
   .notFound(() => render(NotFoundPage));
 

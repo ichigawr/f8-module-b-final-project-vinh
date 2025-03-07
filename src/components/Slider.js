@@ -1,13 +1,13 @@
 import "./Slider.css";
 
-function Slider(images, imageHeight = "auto", alt = "") {
+function Slider(images, alt = "") {
   if (!images || images.length === 0) {
     console.error("No images found.");
     return "";
   }
 
   return `
-    <div class="slider"  style="height: ${imageHeight}">
+    <div class="slider">
       <img src="${images[0]}" alt="${alt}" />
       ${
         images.length > 1

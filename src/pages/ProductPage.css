@@ -9,7 +9,11 @@
     }
 }
 
-.product__right-content {
+#product__left-content {
+    width: 250px;
+}
+
+#product__right-content {
     width: 442px;
     margin-left: 27.7px;
 }
