@@ -150,7 +150,9 @@ const searchHandler = (products) => {
     }
   });
   searchInput.addEventListener("blur", () => {
-    resultsDropdown.style.display = "none";
+    if (!resultsDropdown.matches(":hover")) {
+      resultsDropdown.style.display = "none";
+    }
   });
 };
 
