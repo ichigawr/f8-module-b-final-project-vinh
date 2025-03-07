@@ -1,6 +1,7 @@
 import "./style.css";
 import Navigo from "navigo";
 import Header from "./layouts/Header";
+import Footer from "./layouts/Footer";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -26,6 +27,7 @@ const app = document.getElementById("app");
 const router = new Navigo("/", { linksSelector: "a" });
 
 document.getElementById("header").innerHTML = Header();
+document.getElementById("footer").innerHTML = Footer();
 
 const render = (content, handler = null, ...args) => {
   app.innerHTML = content(...args);

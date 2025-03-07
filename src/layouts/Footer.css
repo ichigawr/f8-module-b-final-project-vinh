@@ -1,0 +1,13 @@
+footer {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 1rem;
+    background-color: #e9ecf0;
+    border-top: 1px solid #e9ecef;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
