@@ -1,7 +1,7 @@
 import "./Footer.css";
 
-function Footer() {
-  return `
+function renderFooter() {
+  document.getElementById("footer").innerHTML = `
     <a href="/" class="logo">Logo</a>
     <div class="footer-links">
       <h4>Quick Links</h4>
@@ -26,4 +26,4 @@ function Footer() {
   `;
 }
 
-export default Footer;
+export default renderFooter;

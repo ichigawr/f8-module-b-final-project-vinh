@@ -1,24 +1,30 @@
 import "./style.css";
 import Navigo from "navigo";
-import Header from "./layouts/Header";
-import Footer from "./layouts/Footer";
+
+import renderHeader from "./layouts/Header";
+import renderFooter from "./layouts/Footer";
+
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 import NotFoundPage from "./pages/NotFoundPage";
+
 import {
   loginPageHandler,
   registerPageHandler,
 } from "./handlers/authPageHandler";
+
 import homePageHandler, {
   getFeaturedProducts,
   getCategorizedProducts,
 } from "./handlers/homePageHandler";
+
 import productPageHandler from "./handlers/productPageHandler";
 import cartPageHandler from "./handlers/cartPageHandler";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
+
 import { get } from "./api/api";
 
 localStorage.cart ??= JSON.stringify([]);
@@ -26,8 +32,8 @@ localStorage.cart ??= JSON.stringify([]);
 const app = document.getElementById("app");
 const router = new Navigo("/", { linksSelector: "a" });
 
-document.getElementById("header").innerHTML = Header();
-document.getElementById("footer").innerHTML = Footer();
+renderHeader();
+renderFooter();
 
 const render = (content, handler = null, ...args) => {
   app.innerHTML = content(...args);

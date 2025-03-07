@@ -23,7 +23,8 @@ const post = async (body, path) => {
       },
       body: JSON.stringify(body),
     });
-    return res.ok;
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.error(error);
   }
