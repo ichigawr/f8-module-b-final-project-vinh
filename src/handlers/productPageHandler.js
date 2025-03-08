@@ -1,3 +1,4 @@
+import Toastify from "toastify-js";
 import sliderHandler from "./sliderHandler";
 import quantityInputHandler from "./quantityInputHandler";
 
@@ -30,6 +31,24 @@ const productPageHandler = ({ id, title, price, stock, images, thumbnail }) => {
       } else cart[index].quantity += product.quantity;
 
       localStorage.cart = JSON.stringify(cart);
+
+      Toastify({
+        text: "Added to cart!",
+        duration: 3000,
+        gravity: "top",
+        stopOnFocus: true,
+        style: {
+          position: "absolute",
+          right: "10px",
+          marginTop: "60px",
+          background: `linear-gradient(to right, #4caf50, #2e7d32)`,
+          color: "#fff",
+          padding: "12px 24px",
+          borderRadius: "8px",
+          fontSize: "16px",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        },
+      }).showToast();
     } catch (error) {
       console.error(error);
     }

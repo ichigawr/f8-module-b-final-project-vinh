@@ -27,7 +27,7 @@ const cartPageHandler = (cart) => {
   });
 
   checkoutBtn.addEventListener("click", () => {
-    const products = cart.map(({ id, quantity, stock }) => {
+    cart.forEach(({ id, quantity, stock }) => {
       const newStock = { stock: stock - quantity };
       patch(newStock, `products/${id}`);
     });
