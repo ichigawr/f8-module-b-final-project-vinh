@@ -4,6 +4,15 @@ function renderHeader() {
   const isSignedIn =
     localStorage.getItem("loginData") || sessionStorage.getItem("loginData");
 
+  const productCount = (() => {
+    try {
+      return JSON.parse(localStorage.cart).length;
+    } catch (error) {
+      console.error(error);
+      return 0;
+    }
+  })();
+
   document.getElementById("header").innerHTML = `
     <a href="/" class="logo"><i class="fa-brands fa-square-xing"></i></a>
     <nav>
@@ -11,16 +20,11 @@ function renderHeader() {
         <li>
           <a href="/cart">
             <i class="fa-solid fa-cart-shopping"></i>
-            <span id="cart-count"
-              >${(() => {
-                try {
-                  return JSON.parse(localStorage.cart).length;
-                } catch (error) {
-                  console.error(error);
-                  return 0;
-                }
-              })()}</span
-            >
+            ${
+              productCount > 0
+                ? `<span id="cart-count">${productCount}</span>`
+                : ""
+            }
           </a>
         </li>
         ${

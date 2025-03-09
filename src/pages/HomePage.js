@@ -65,8 +65,10 @@ function HomePage(_, categorizedProducts, featuredProducts) {
       ${Slider(featuredProducts, "Featured Product")}
     </div>
     <h1 style="margin: 5rem 0; text-align: center">Products</h1>
-    <input type="text" id="search-input" placeholder="Search products" />
-    <div id="search-results"></div>
+    <div id="search-bar">
+      <input type="text" id="search-input" placeholder="Search products" autocomplete="off" />
+      <div id="search-results"></div>
+    </div>
     <div id="sorting-options">
       <label for="sort">Sort by:</label>
       <select id="sort">
