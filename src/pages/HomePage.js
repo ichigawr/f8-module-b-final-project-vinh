@@ -1,5 +1,6 @@
 import "./HomePage.css";
 import Slider from "../components/Slider";
+import { capitalize } from "../utils";
 
 function ProductsSection(categorizedProducts) {
   if (!Array.isArray(categorizedProducts)) {
@@ -11,7 +12,7 @@ function ProductsSection(categorizedProducts) {
     ${categorizedProducts
       .map(
         ({ category, products }) => `
-            <h2>${category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+            <h2>${capitalize(category)}</h2>
             <div class="products-container">
               ${products
                 .map(

@@ -1,13 +1,15 @@
 import CartPage from "../pages/CartPage";
 import quantityInputHandler from "./quantityInputHandler";
 import { render, router } from "../main";
-import { patch } from "../api/api";
+import { patch } from "../api";
 
 const cartPageHandler = (cart) => {
   if (!Array.isArray(cart)) {
     console.error("Invalid cart data");
     return;
   }
+
+  if (!cart.length) return;
 
   quantityInputHandler();
 

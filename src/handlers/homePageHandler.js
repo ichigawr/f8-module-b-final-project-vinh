@@ -131,7 +131,7 @@ const searchHandler = (products) => {
             `
           )
           .join("")
-      : "<div class='no-results'>No products found</div>";
+      : "<p>No products found</p>";
 
     resultsDropdown.style.display = "block";
 
@@ -143,7 +143,7 @@ const searchHandler = (products) => {
     });
   };
 
-  searchInput.addEventListener("input", debounce(handleSearch, 300));
+  searchInput.addEventListener("input", debounce(handleSearch, 500));
   searchInput.addEventListener("focus", () => {
     if (searchInput.value.trim() !== "") {
       resultsDropdown.style.display = "block";
