@@ -32,6 +32,7 @@ const authPageHandler = async (page = "login") => {
   if (!isValidPage(page)) return;
 
   const authForm = document.getElementById("auth-form");
+  const remember = document.getElementById("remember");
 
   authForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -49,7 +50,13 @@ const authPageHandler = async (page = "login") => {
           ? "Signed in successfully!"
           : "Account created successfully! You are now signed in.";
       showNotification(message, "success");
-      localStorage.setItem("loginData", JSON.stringify(data));
+
+      if (remember.checked) {
+        localStorage.setItem("loginData", JSON.stringify(data));
+      } else {
+        sessionStorage.setItem("loginData", JSON.stringify(data));
+      }
+
       renderHeader();
       router.navigate("/");
     } else {

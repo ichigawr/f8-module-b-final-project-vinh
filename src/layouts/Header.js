@@ -1,6 +1,9 @@
 import "./header.css";
 
 function renderHeader() {
+  const isSignedIn =
+    localStorage.getItem("loginData") || sessionStorage.getItem("loginData");
+
   document.getElementById("header").innerHTML = `
     <a href="/" class="logo"><i class="fa-brands fa-square-xing"></i></a>
     <nav>
@@ -21,7 +24,7 @@ function renderHeader() {
           </a>
         </li>
         ${
-          localStorage.getItem("loginData")
+          isSignedIn
             ? `
               <li>
                 <button
@@ -42,10 +45,11 @@ function renderHeader() {
     </nav>
   `;
 
-  if (localStorage.getItem("loginData")) {
+  if (isSignedIn) {
     const logoutButton = document.getElementById("logout-btn");
     logoutButton.addEventListener("click", () => {
       localStorage.removeItem("loginData");
+      sessionStorage.removeItem("loginData");
       renderHeader();
     });
   }
