@@ -2,7 +2,7 @@ import "./header.css";
 
 function renderHeader() {
   document.getElementById("header").innerHTML = `
-    <a href="/" class="logo">Logo</a>
+    <a href="/" class="logo"><i class="fa-brands fa-square-xing"></i></a>
     <nav>
       <ul>
         <li>
@@ -31,7 +31,7 @@ function renderHeader() {
                   Logout
                 </button>
               </li>
-              <i class="fa-solid fa-user" style="color: white"></i>
+              <li><i class="fa-solid fa-user" style="color: white"></i></li>
             `
             : `
               <li><a href="/login">Login</a></li>

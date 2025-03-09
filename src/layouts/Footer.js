@@ -2,7 +2,7 @@ import "./Footer.css";
 
 function renderFooter() {
   document.getElementById("footer").innerHTML = `
-    <a href="/" class="logo">Logo</a>
+    <a href="/" class="logo"><i class="fa-brands fa-square-xing"></i></a>
     <div class="footer-links">
       <h4>Quick Links</h4>
       <ul>
