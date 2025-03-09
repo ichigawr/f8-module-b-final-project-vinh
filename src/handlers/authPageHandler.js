@@ -1,104 +1,67 @@
-import Toastify from "toastify-js";
 import renderHeader from "../layouts/Header";
-import { post } from "../api/api";
+import { post } from "../api";
 import { router } from "../main";
+import { showNotification } from "../utils";
 
-const showNotification = (message, ...colors) => {
-  if (!message || typeof message !== "string" || message.trim() === "") {
-    console.error("Message must be a non-empty string");
-    return;
-  }
-
-  if (!Array.isArray(colors) || colors.length === 0) {
-    colors = ["#00b09b", "#96c93d"];
-    console.warn("Invalid colors provided, using default gradient");
-  }
-
-  Toastify({
-    text: message,
-    duration: 3000,
-    gravity: "top",
-    stopOnFocus: true,
-    style: {
-      position: "absolute",
-      right: "10px",
-      marginTop: "60px",
-      background: `linear-gradient(to right, ${colors.join(",")})`,
-      color: "#fff",
-      padding: "12px 24px",
-      borderRadius: "8px",
-      fontSize: "16px",
-      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-    },
-  }).showToast();
-};
-
-const isInfoValid = (userInfo) => {
-  userInfo.email = userInfo.email.trim();
-
-  if (userInfo.email === "") {
-    showNotification("Email is required.", "#d44336", "#d32f2f");
-    return false;
-  }
-
-  if (userInfo.password.length < 6) {
-    showNotification(
-      "Password must be at least 6 characters.",
-      "#d44336",
-      "#d32f2f"
-    );
+const isValidPage = (page) => {
+  if (typeof page !== "string" || !["login", "register"].includes(page)) {
+    console.error("Invalid page");
     return false;
   }
 
   return true;
 };
 
-const loginPageHandler = async () => {
-  const loginForm = document.getElementById("login-form");
+const isValidInfo = (userInfo) => {
+  userInfo.email = userInfo.email.trim();
 
-  loginForm.addEventListener("submit", async (e) => {
+  if (userInfo.email === "") {
+    showNotification("Email is required.", "error");
+    return false;
+  }
+
+  if (userInfo.password.length < 6) {
+    showNotification("Password must be at least 6 characters.", "error");
+    return false;
+  }
+
+  return true;
+};
+
+const authPageHandler = async (page = "login") => {
+  if (!isValidPage(page)) return;
+
+  const authForm = document.getElementById("auth-form");
+
+  authForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(loginForm);
+    const formData = new FormData(authForm);
     const userInfo = Object.fromEntries(formData);
 
-    if (!isInfoValid(userInfo)) return;
+    if (!isValidInfo(userInfo)) return;
 
-    const data = await post(userInfo, "login");
+    let data = await post(userInfo, page);
 
     if (data.accessToken) {
-      showNotification("Login successful!", "#4caf50", "#2e7d32");
+      const message =
+        page === "login"
+          ? "Signed in successfully!"
+          : "Account created successfully! You are now signed in.";
+      showNotification(message, "success");
       localStorage.setItem("loginData", JSON.stringify(data));
       renderHeader();
       router.navigate("/");
     } else {
-      showNotification("Invalid email or password.", "#d44336", "#d32f2f");
-      loginForm.reset();
+      const message =
+        page === "login"
+          ? "Invalid email or password."
+          : "Email already exists.";
+      showNotification(message, "error");
+      authForm.reset();
     }
   });
 };
 
-const registerPageHandler = async () => {
-  const registerForm = document.getElementById("register-form");
-
-  registerForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(registerForm);
-    const userInfo = Object.fromEntries(formData);
-
-    if (!isInfoValid(userInfo)) return;
-
-    const data = await post(userInfo, "register");
-
-    if (data.accessToken) {
-      showNotification("Registration successful.", "#4caf50", "#2e7d32");
-      router.navigate("/login");
-    } else {
-      showNotification("Email already exists.", "#d44336", "#d32f2f");
-      registerForm.reset();
-    }
-  });
-};
-
-export { loginPageHandler, registerPageHandler };
+export default authPageHandler;
+export { isValidPage };
