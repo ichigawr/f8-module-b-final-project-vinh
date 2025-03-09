@@ -67,7 +67,7 @@ function HomePage(_, categorizedProducts, featuredProducts) {
     <h1 style="margin: 5rem 0; text-align: center">Products</h1>
     <div id="search-bar">
       <input type="text" id="search-input" placeholder="Search products" autocomplete="off" />
-      <div id="search-results"></div>
+      <div id="search-results" style="display: none"></div>
     </div>
     <div id="sorting-options">
       <label for="sort">Sort by:</label>

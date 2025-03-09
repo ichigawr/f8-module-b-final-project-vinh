@@ -1,3 +1,5 @@
+import { calculateTotal } from "./cartPageHandler";
+
 const quantityInputHandler = () => {
   const inputQuantityElements =
     document.getElementsByClassName("input-quantity");
@@ -35,6 +37,7 @@ const quantityInputHandler = () => {
           const cart = JSON.parse(localStorage.cart);
           const index = cart.findIndex((item) => item.id === id);
           cart[index].quantity = Number(inputQuantity.value);
+          calculateTotal(cart);
           localStorage.cart = JSON.stringify(cart);
         } catch (error) {
           console.error(error);

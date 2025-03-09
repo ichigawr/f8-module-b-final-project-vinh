@@ -7,41 +7,54 @@ function CartPage(cart) {
 
   return `
     <div id="cart">
-      <table>
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${cart
-            .map(
-              ({ id, title, price, stock, thumbnail, quantity }, index) => `
-                <tr>
-                  <td>${index + 1}</td>
-                  <td>
-                    <img src="${thumbnail}" alt="${title}" class="cart-thumbnail" />
-                  </td>
-                  <td>${title}</td>
-                  <td>$${price}</td>
-                  <td>
-                    <div class="cart-quantity">
-                      ${QuantityInput(id, stock, quantity)}
-                      <button class="remove-from-cart-btn">
-                        <i class="fa-solid fa-trash-can"></i>
-                      </button>
+      <div id="cart-items">
+        ${cart
+          .map(
+            ({
+              id,
+              title,
+              price,
+              discountPercentage,
+              stock,
+              thumbnail,
+              quantity,
+            }) => {
+              const newPrice = price - (price * discountPercentage) / 100;
+
+              return `
+                <div class="cart-item">
+                  <img src="${thumbnail}" alt="${title}" class="cart-thumbnail" />
+                  <div>
+                    <p class="cart-item-title">${title}</p>
+                    <div class="cart-item-details">
+                      <p>
+                        <span><del>$${price}</del></span>
+                        <span><strong>$${newPrice.toFixed(2)}</strong></span>
+                      </p>
+                      <div class="cart-quantity">
+                        ${QuantityInput(id, stock, quantity)}
+                        <button class="remove-from-cart-btn">
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </div>
                     </div>
-                  </td>
-                </tr>
-              `
-            )
-            .join("")}
-        </tbody>
-      </table>
+                  </div>
+                </div>
+              `;
+            }
+          )
+          .join("")}
+      </div>
+
+      <p id="cart-total">
+        Total: $${cart
+          .reduce(
+            (total, { price, discountPercentage, quantity }) =>
+              total + (price - (price * discountPercentage) / 100) * quantity,
+            0
+          )
+          .toFixed(2)}
+      </p>
   
       <button id="checkout-btn">Checkout</button>
     </div>
